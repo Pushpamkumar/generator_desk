@@ -1,0 +1,4 @@
+Company,Year,Revenue_Cr,EBITDA_Cr,Net_Profit_Cr,Operating_Margin_%,Net_Margin_%,ROE_%,ROA_%,Debt_Equity_Ratio,Market_Cap_Cr,PE_Ratio
+Sample Company,2021,50000,10000,5000,20,10,15,8,0.5,250000,30
+Sample Company,2022,55000,11500,5750,21,10.5,16,8.5,0.45,275000,28
+Sample Company,2023,61000,13200,6710,22,11,17.5,9,0.40,305000,26
