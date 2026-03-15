@@ -3,17 +3,9 @@ LLM Integration Handler - Google Gemini API (Free Tier)
 Generates professional equity research content using AI
 """
 import os
-
 from typing import Optional
-
-try:
-    from google import genai
-except ImportError:
-    from google import genai  # intentionally fail fast if missing
-
+from google import genai
 import json
-from typing import Optional
-import google.generativeai as genai
 
 
 class LLMHandler:
@@ -24,7 +16,6 @@ class LLMHandler:
         self.api_key = api_key or os.getenv("GOOGLE_API_KEY")
         if not self.api_key:
             raise ValueError("GOOGLE_API_KEY not set")
-
 
         self.client = genai.Client(api_key=self.api_key)
         self.model_name = os.getenv("GENAI_MODEL", "")
@@ -76,12 +67,6 @@ class LLMHandler:
         if not self.model_name:
             raise ValueError("No supported Gemini model found. Set GENAI_MODEL to a valid model name.")
 
-        
-        # Configure Gemini API
-        genai.configure(api_key=self.api_key)
-        self.model = genai.GenerativeModel('gemini-pro')
-
-    
     def generate_company_overview(self, company_name: str, sector: str) -> str:
         """Generate company overview section"""
         prompt = f"""Generate a professional 100-150 word company overview for {company_name} 
