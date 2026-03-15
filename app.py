@@ -183,6 +183,7 @@ with tab1:
     if data_source == "Use Sample Data":
         try:
             sample_data = pd.read_csv("data/sample_financials.csv")
+
             # Case-insensitive matching and trim
             company_name_clean = company_name.strip().lower() if company_name else ""
             sample_data['Company_clean'] = sample_data['Company'].str.strip().str.lower()
@@ -201,6 +202,15 @@ with tab1:
                 st.dataframe(user_financials, use_container_width=True)
         except FileNotFoundError:
             st.warning("Sample data file not found. Using manual entry mode.")
+            if company_name and company_name in sample_data['Company'].values:
+                user_financials = sample_data[sample_data['Company'] == company_name]
+                st.success(f"✓ Sample data loaded for {company_name}")
+            else:
+                st.info("Sample data available. Select a company to proceed.")
+        except FileNotFoundError:
+            st.warning("Sample data file not found. Using manual entry mode.")
+    
+
     else:  # Upload CSV/Excel
         uploaded_file = st.file_uploader(
             "Upload Financial Data (CSV/Excel)",
@@ -215,6 +225,7 @@ with tab1:
                 else:
                     user_financials = pd.read_excel(uploaded_file)
 
+
                 required_cols = {
                     'Year', 'Revenue_Cr', 'EBITDA_Cr', 'Net_Profit_Cr', 'Operating_Margin_%',
                     'Net_Margin_%', 'ROE_%', 'ROA_%', 'Debt_Equity_Ratio', 'Market_Cap_Cr', 'PE_Ratio'
@@ -228,6 +239,13 @@ with tab1:
                     st.dataframe(user_financials, use_container_width=True)
             except Exception as e:
                 st.error(f"Error reading file: {str(e)}")
+
+
+                st.success("✓ File uploaded successfully")
+                st.dataframe(user_financials, use_container_width=True)
+            except Exception as e:
+                st.error(f"Error reading file: {str(e)}")
+    
 
     st.divider()
     
@@ -247,7 +265,11 @@ with tab1:
             elif user_financials is None or len(user_financials) == 0:
                 st.error("❌ Please provide financial data")
             elif not api_key:
+
                     st.error("❌ Please enter your Google API key in the sidebar")
+
+                st.error("❌ Please enter your Anthropic API key in the sidebar")
+
             else:
                 # Generate desk note
                 st.info("Generating desk note... This may take a moment.")
@@ -598,7 +620,11 @@ with tab3:
     ### Technology Stack
     - **Frontend**: Streamlit
     - **Backend**: Python
+
     - **LLM Integration**: Google Gemini API
+
+    - **LLM Integration**: Anthropic Claude API
+
     - **Data Processing**: Pandas
     - **Visualization**: Plotly
     - **Export**: PDF, CSV, TXT
@@ -669,7 +695,11 @@ with tab3:
     1. **Select a Company** - Choose from sample database or enter a company name
     2. **Choose Sector** - Select the appropriate sector classification
     3. **Provide Financial Data** - Use sample data or upload CSV
+
     4. **Configure LLM** - Enter your Google API key
+=======
+    4. **Configure LLM** - Enter your Anthropic API key
+
     5. **Generate Desk Note** - Click to create report
     6. **Review & Download** - View results and export in desired format
     

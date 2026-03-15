@@ -3,12 +3,18 @@ LLM Integration Handler - Google Gemini API (Free Tier)
 Generates professional equity research content using AI
 """
 import os
+
 from typing import Optional
 
 try:
     from google import genai
 except ImportError:
     from google import genai  # intentionally fail fast if missing
+
+import json
+from typing import Optional
+import google.generativeai as genai
+
 
 class LLMHandler:
     """Handle LLM API calls for desk note generation using Google Gemini"""
@@ -18,6 +24,7 @@ class LLMHandler:
         self.api_key = api_key or os.getenv("GOOGLE_API_KEY")
         if not self.api_key:
             raise ValueError("GOOGLE_API_KEY not set")
+
 
         self.client = genai.Client(api_key=self.api_key)
         self.model_name = os.getenv("GENAI_MODEL", "")
@@ -68,6 +75,12 @@ class LLMHandler:
         self.model_name = os.getenv("GENAI_MODEL", "")
         if not self.model_name:
             raise ValueError("No supported Gemini model found. Set GENAI_MODEL to a valid model name.")
+
+        
+        # Configure Gemini API
+        genai.configure(api_key=self.api_key)
+        self.model = genai.GenerativeModel('gemini-pro')
+
     
     def generate_company_overview(self, company_name: str, sector: str) -> str:
         """Generate company overview section"""
@@ -184,7 +197,8 @@ Professional, punchy, MBA-level quality."""
     def _call_api(self, prompt: str) -> str:
         """Call Google Gemini API with given prompt"""
         try:
-            response = self.client.models.generate_content(
+
+           response = self.client.models.generate_content(
                 model=self.model_name,
                 contents=prompt,
                 config={
@@ -242,6 +256,18 @@ Professional, punchy, MBA-level quality."""
             return str(response)
         except Exception:
             return str(response)
+
+            response = self.model.generate_content(
+                prompt,
+                generation_config=genai.types.GenerationConfig(
+                    max_output_tokens=500,
+                    temperature=0.7,
+                )
+            )
+            return response.text
+        except Exception as e:
+            return f"Error generating content: {str(e)}"
+
     
     @staticmethod
     def _format_metrics_for_llm(financials: dict, trends: dict) -> str:
