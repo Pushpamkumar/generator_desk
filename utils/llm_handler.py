@@ -197,8 +197,7 @@ Professional, punchy, MBA-level quality."""
     def _call_api(self, prompt: str) -> str:
         """Call Google Gemini API with given prompt"""
         try:
-
-           response = self.client.models.generate_content(
+            response = self.client.models.generate_content(
                 model=self.model_name,
                 contents=prompt,
                 config={
@@ -257,18 +256,6 @@ Professional, punchy, MBA-level quality."""
         except Exception:
             return str(response)
 
-            response = self.model.generate_content(
-                prompt,
-                generation_config=genai.types.GenerationConfig(
-                    max_output_tokens=500,
-                    temperature=0.7,
-                )
-            )
-            return response.text
-        except Exception as e:
-            return f"Error generating content: {str(e)}"
-
-    
     @staticmethod
     def _format_metrics_for_llm(financials: dict, trends: dict) -> str:
         """Format financial metrics into readable text for LLM"""
@@ -286,4 +273,4 @@ Growth Trends:
 - EBITDA Growth: {trends.get('ebitda_growth', 'N/A')}% YoY
 - Net Profit Growth: {trends.get('profit_growth', 'N/A')}% YoY
 """
-        return text
+        return text  

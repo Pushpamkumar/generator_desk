@@ -265,11 +265,7 @@ with tab1:
             elif user_financials is None or len(user_financials) == 0:
                 st.error("❌ Please provide financial data")
             elif not api_key:
-
-                    st.error("❌ Please enter your Google API key in the sidebar")
-
-                st.error("❌ Please enter your Anthropic API key in the sidebar")
-
+                st.error("❌ Please enter your Google API key in the sidebar")
             else:
                 # Generate desk note
                 st.info("Generating desk note... This may take a moment.")
@@ -697,7 +693,7 @@ with tab3:
     3. **Provide Financial Data** - Use sample data or upload CSV
 
     4. **Configure LLM** - Enter your Google API key
-=======
+
     4. **Configure LLM** - Enter your Anthropic API key
 
     5. **Generate Desk Note** - Click to create report
@@ -728,4 +724,4 @@ st.markdown("""
     Sample data used. Consult qualified financial advisors before making investment decisions.</p>
     <p>© 2025 | Powered by Streamlit + Claude AI</p>
 </div>
-""", unsafe_allow_html=True)
+""", unsafe_allow_html=True) 
