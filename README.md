@@ -1,14 +1,18 @@
+---
+title: Desk Generator
+emoji: 📊
+colorFrom: blue
+colorTo: purple
+sdk: streamlit
+sdk_version: "1.28.0"
+python_version: "3.11"
+app_file: app.py
+pinned: false
+---
+
 # Desk Generator 📊
 
 A Streamlit-based financial report generator that takes uploaded CSV data and builds smart summary output and downloadable reports.
-
-## Project Info
-
-- **Name:** Desk Generator
-- **Emoji:** 📊
-- **SDK:** Streamlit
-- **Python version:** 3.11
-- **App entry:** `app.py`
 
 ## Features
 
@@ -61,6 +65,5 @@ streamlit run app.py
 1. Fork the repo
 2. Create a feature branch
 3. Open a PR with your changes
-
 
 Enjoy building smart desk reports! 🚀
